@@ -3,6 +3,8 @@ import { Subject } from "rxjs/Subject";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 
+import { SpotifyService } from "../services/spotify.service"
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,9 +14,12 @@ export class SearchComponent implements OnInit {
 
 	private subject: Subject<string> = new Subject();
 	private handleSearch(searchTextValue: string): void {
-
+      this.spotifyService.searchMusic(searchTextValue)
+        .subscribe(
+          res => console.log(res.artists.items)
+        )
     }
-  constructor() { }
+  constructor(private spotifyService: SpotifyService ) { }
 
   ngOnInit() {
   	this.subject
